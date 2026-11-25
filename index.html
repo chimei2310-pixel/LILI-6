@@ -242,8 +242,8 @@
         <div class="hidden md:block w-2/3 h-0.5 bg-slate-300"></div>
       </div>
 
-      <!-- 三張明顯可點擊的互動卡片 -->
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+      <!-- 三張完整組織架構圖互動卡片（含子單位與組織職掌清單） -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-5 items-stretch">
         <!-- 藍色：醫療服務組 -->
         <button type="button" onclick="selectTeam('service', this)"
                 class="team-card active text-left rounded-2xl p-5 bg-blue-50 border-2 border-blue-600 shadow-lg hover:-translate-y-1 transition-all flex flex-col justify-between cursor-pointer">
@@ -252,14 +252,25 @@
               <span class="text-lg font-extrabold text-blue-900">🔵 醫療服務組</span>
               <span class="status-badge text-xs font-bold bg-blue-600 text-white px-3 py-1 rounded-full shadow-2xs">✓ 目前檢視</span>
             </div>
-            <div class="flex flex-wrap gap-1.5 mb-3">
-              <span class="bg-white text-blue-900 border border-blue-200 text-xs font-bold px-2.5 py-1 rounded-lg">門急診掛批</span>
+            <div class="flex flex-wrap gap-1.5 mb-3.5">
+              <span class="bg-white text-blue-900 border border-blue-200 text-xs font-bold px-2.5 py-1 rounded-lg">門、急診掛批</span>
               <span class="bg-white text-blue-900 border border-blue-200 text-xs font-bold px-2.5 py-1 rounded-lg">轉診中心</span>
               <span class="bg-white text-blue-900 border border-blue-200 text-xs font-bold px-2.5 py-1 rounded-lg">服務台</span>
             </div>
-            <p class="text-xs text-slate-700 bg-white/85 rounded-xl p-3 border border-blue-100 leading-relaxed">
-              負責初複診掛號、門急診批價收費、大廳服務台諮詢及雙向轉診業務。
-            </p>
+            <div class="bg-white/90 rounded-xl p-3.5 border border-blue-200/80">
+              <div class="text-xs font-bold text-blue-800 mb-2">📌 組別業務架構總覽：</div>
+              <ul class="space-y-1 text-xs text-slate-700 leading-relaxed">
+                <li class="flex items-start gap-1.5"><span class="text-blue-600 font-bold">•</span><span>門診、急診掛號批價作業</span></li>
+                <li class="flex items-start gap-1.5"><span class="text-blue-600 font-bold">•</span><span>非住院組上班時間業務協辦</span></li>
+                <li class="flex items-start gap-1.5"><span class="text-blue-600 font-bold">•</span><span>門急診颱災就醫服務及職傷電訪</span></li>
+                <li class="flex items-start gap-1.5"><span class="text-blue-600 font-bold">•</span><span>身心障礙鑑定作業</span></li>
+                <li class="flex items-start gap-1.5"><span class="text-blue-600 font-bold">•</span><span>轉診個案受理及回覆</span></li>
+                <li class="flex items-start gap-1.5"><span class="text-blue-600 font-bold">•</span><span>高風險病人召回就醫通知</span></li>
+                <li class="flex items-start gap-1.5"><span class="text-blue-600 font-bold">•</span><span>法院、勞保、保險調卷</span></li>
+                <li class="flex items-start gap-1.5"><span class="text-blue-600 font-bold">•</span><span>服務台各項諮詢</span></li>
+                <li class="flex items-start gap-1.5"><span class="text-blue-600 font-bold">•</span><span>醫師輪值掛號開檔維護</span></li>
+              </ul>
+            </div>
           </div>
         </button>
 
@@ -271,14 +282,25 @@
               <span class="text-lg font-extrabold text-emerald-900">🟢 住院服務組</span>
               <span class="status-badge text-xs font-bold bg-white text-emerald-800 border border-emerald-300 px-3 py-1 rounded-full">點擊切換檢視 ▾</span>
             </div>
-            <div class="flex flex-wrap gap-1.5 mb-3">
+            <div class="flex flex-wrap gap-1.5 mb-3.5">
               <span class="bg-white text-emerald-900 border border-emerald-200 text-xs font-bold px-2.5 py-1 rounded-lg">住院批價</span>
               <span class="bg-white text-emerald-900 border border-emerald-200 text-xs font-bold px-2.5 py-1 rounded-lg">住出院櫃台</span>
               <span class="bg-white text-emerald-900 border border-emerald-200 text-xs font-bold px-2.5 py-1 rounded-lg">開刀房批價</span>
             </div>
-            <p class="text-xs text-slate-700 bg-white/85 rounded-xl p-3 border border-emerald-100 leading-relaxed">
-              負責住出院手續結帳、床位調度、病房與開刀房批價及各類證明代辦。
-            </p>
+            <div class="bg-white/90 rounded-xl p-3.5 border border-emerald-200/80">
+              <div class="text-xs font-bold text-emerald-800 mb-2">📌 組別業務架構總覽：</div>
+              <ul class="space-y-1 text-xs text-slate-700 leading-relaxed">
+                <li class="flex items-start gap-1.5"><span class="text-emerald-600 font-bold">•</span><span>病房帳務作業</span></li>
+                <li class="flex items-start gap-1.5"><span class="text-emerald-600 font-bold">•</span><span>協助護理站相關業務管理</span></li>
+                <li class="flex items-start gap-1.5"><span class="text-emerald-600 font-bold">•</span><span>住出院作業與床位管理</span></li>
+                <li class="flex items-start gap-1.5"><span class="text-emerald-600 font-bold">•</span><span>診斷書與相關業務代辦</span></li>
+                <li class="flex items-start gap-1.5"><span class="text-emerald-600 font-bold">•</span><span>開刀房帳務作業</span></li>
+                <li class="flex items-start gap-1.5"><span class="text-emerald-600 font-bold">•</span><span>病床檔維護作業</span></li>
+                <li class="flex items-start gap-1.5"><span class="text-emerald-600 font-bold">•</span><span>病房帳務作業</span></li>
+                <li class="flex items-start gap-1.5"><span class="text-emerald-600 font-bold">•</span><span>協助護理站相關業務管理</span></li>
+                <li class="flex items-start gap-1.5"><span class="text-emerald-600 font-bold">•</span><span>住出院作業與床位管理</span></li>
+              </ul>
+            </div>
           </div>
         </button>
 
@@ -290,14 +312,22 @@
               <span class="text-lg font-extrabold text-purple-900">🟣 申報業務組</span>
               <span class="status-badge text-xs font-bold bg-white text-purple-800 border border-purple-300 px-3 py-1 rounded-full">點擊切換檢視 ▾</span>
             </div>
-            <div class="flex flex-wrap gap-1.5 mb-3">
+            <div class="flex flex-wrap gap-1.5 mb-3.5">
               <span class="bg-white text-purple-900 border border-purple-200 text-xs font-bold px-2.5 py-1 rounded-lg">門診申報</span>
               <span class="bg-white text-purple-900 border border-purple-200 text-xs font-bold px-2.5 py-1 rounded-lg">住院申報</span>
               <span class="bg-white text-purple-900 border border-purple-200 text-xs font-bold px-2.5 py-1 rounded-lg">申覆爭議與事前審查</span>
             </div>
-            <p class="text-xs text-slate-700 bg-white/85 rounded-xl p-3 border border-purple-100 leading-relaxed">
-              負責全院門住診健保費用申報、抽審申覆爭議、事前審查與補助計畫申報。
-            </p>
+            <div class="bg-white/90 rounded-xl p-3.5 border border-purple-200/80">
+              <div class="text-xs font-bold text-purple-800 mb-2">📌 組別業務架構總覽：</div>
+              <ul class="space-y-1 text-xs text-slate-700 leading-relaxed">
+                <li class="flex items-start gap-1.5"><span class="text-purple-600 font-bold">•</span><span>門診申報作業</span></li>
+                <li class="flex items-start gap-1.5"><span class="text-purple-600 font-bold">•</span><span>住院申報作業</span></li>
+                <li class="flex items-start gap-1.5"><span class="text-purple-600 font-bold">•</span><span>申覆、爭議作業</span></li>
+                <li class="flex items-start gap-1.5"><span class="text-purple-600 font-bold">•</span><span>事前審查作業</span></li>
+                <li class="flex items-start gap-1.5"><span class="text-purple-600 font-bold">•</span><span>試辦計畫專案作業</span></li>
+                <li class="flex items-start gap-1.5"><span class="text-purple-600 font-bold">•</span><span>計價檔維護作業</span></li>
+              </ul>
+            </div>
           </div>
         </button>
       </div>
@@ -739,12 +769,12 @@
 
   </main>
 
-  <!-- 5. 頁尾資訊 -->
+  <!-- 5. 頁尾資訊（已修正院址為：臺南市佳里區佳興里佳里興606號） -->
   <footer class="bg-slate-800 text-slate-300 py-8 px-4 sm:px-6 mt-12 text-xs sm:text-sm border-t border-slate-700">
     <div class="max-w-6xl mx-auto flex flex-col sm:flex-row justify-between gap-6">
       <div class="space-y-1.5">
         <p class="text-white font-bold text-base">奇美醫療財團法人佳里奇美醫院｜醫療事務室</p>
-        <p>院區地址：臺南市佳里區興化里佳里興 606 號</p>
+        <p>院區地址：臺南市佳里區佳興里佳里興606號</p>
       </div>
       <div class="sm:text-right space-y-1.5">
         <p>網頁負責人：謝麗雯｜聯絡分機：<strong class="text-white">32312</strong></p>
