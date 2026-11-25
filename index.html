@@ -1,0 +1,894 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>奇美醫療財團法人佳里奇美醫院｜醫療事務室</title>
+  <!-- 載入 Tailwind CSS 以確保響應式與現代視覺規範 -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: "Noto Sans TC", "Microsoft JhengHei", sans-serif;
+      background-color: #f4f7fa;
+      color: #1e293b;
+    }
+
+    /* 淡入動畫 */
+    .tab-panel {
+      display: none;
+      animation: fadeSlideIn 0.25s ease-out;
+    }
+    .tab-panel.active {
+      display: block;
+    }
+    @keyframes fadeSlideIn {
+      from {
+        opacity: 0;
+        transform: translateY(8px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* 隱藏水平捲軸但保留手機端滑動功能 */
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+    .no-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col antialiased">
+
+  <!-- 1. 頂部全院導覽列 -->
+  <div class="bg-[#003666] text-white text-xs sm:text-sm py-2.5 px-4 sm:px-6">
+    <div class="max-w-6xl mx-auto flex flex-wrap justify-between items-center gap-2">
+      <div class="font-medium tracking-wide flex items-center gap-2">
+        <span class="inline-block w-2 h-2 rounded-full bg-teal-400"></span>
+        奇美醫療財團法人佳里奇美醫院｜科部室介紹
+      </div>
+      <div class="flex items-center gap-4">
+        <a href="https://www.chimei.org.tw/" target="_blank" rel="noopener noreferrer" class="text-slate-200 hover:text-white transition">
+          奇美醫療體系首頁
+        </a>
+        <span class="text-slate-500">|</span>
+        <a href="https://www.chimei.org.tw/main/cmh_department/54120/guide/32300/index.html" target="_blank" rel="noopener noreferrer" class="text-amber-300 hover:text-amber-200 font-medium transition">
+          佳里奇美就醫指南 ↗
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- 2. Hero 視覺橫幅區 -->
+  <header class="bg-gradient-to-br from-[#004b87] via-[#006396] to-[#00796b] text-white py-10 sm:py-14 px-4 sm:px-6 shadow-md">
+    <div class="max-w-6xl mx-auto">
+      <!-- 麵包屑導覽 -->
+      <nav aria-label="Breadcrumb" class="text-xs sm:text-sm text-blue-100/85 mb-3 flex flex-wrap items-center gap-1.5">
+        <span>首頁</span>
+        <span>&gt;</span>
+        <span>科部室介紹</span>
+        <span>&gt;</span>
+        <span>行政單位</span>
+        <span>&gt;</span>
+        <span class="text-white font-semibold">醫療事務室</span>
+      </nav>
+
+      <!-- 標題與副標 -->
+      <div class="flex flex-col lg:flex-row lg:items-end justify-between gap-6">
+        <div class="max-w-3xl">
+          <h1 class="text-3xl sm:text-4xl font-bold tracking-wider mb-3">
+            醫療事務室
+          </h1>
+          <p class="text-sm sm:text-base text-blue-50/95 leading-relaxed">
+            串聯門診、急診掛號批價、住出院服務與健保申報作業，以專業、效率與溫暖的服務精神，陪伴每一位病人與家屬安心完成就醫旅程。
+          </p>
+        </div>
+      </div>
+
+      <!-- 3 個快速捷徑按鈕 (Quick Actions) -->
+      <div class="mt-7 flex flex-wrap gap-3">
+        <a href="https://www.chimei.org.tw/main/cmh_department/54120/guide/32300/index.html" target="_blank" rel="noopener noreferrer"
+           class="inline-flex items-center gap-2 bg-amber-400 hover:bg-amber-300 text-slate-900 font-bold text-sm sm:text-base px-5 py-3 rounded-full shadow-lg hover:-translate-y-0.5 transition">
+          <span>🧭 前往佳里奇美就醫指南 ↗</span>
+        </a>
+
+        <button type="button" onclick="switchTab('forms')"
+                class="inline-flex items-center gap-2 bg-white hover:bg-blue-50 text-[#004b87] font-bold text-sm sm:text-base px-5 py-3 rounded-full shadow-md hover:-translate-y-0.5 transition">
+          <span>📄 常用表單下載（診斷書／病歷委託）</span>
+        </button>
+
+        <button type="button" onclick="switchTab('teams')"
+                class="inline-flex items-center gap-2 bg-white/15 hover:bg-white/25 text-white border border-white/40 font-semibold text-sm sm:text-base px-5 py-3 rounded-full backdrop-blur-sm hover:-translate-y-0.5 transition">
+          <span>🏥 認識三大業務組別</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- 3. Sticky 主導覽分頁列 -->
+  <div id="sticky-nav" class="sticky top-0 z-30 bg-white border-b border-slate-200 shadow-sm">
+    <div class="max-w-6xl mx-auto px-2 sm:px-6 flex overflow-x-auto no-scrollbar">
+      <button type="button" data-tab="about" onclick="switchTab('about')"
+              class="nav-tab px-4 sm:px-6 py-4 text-sm sm:text-base font-semibold text-slate-500 hover:text-[#004b87] border-b-4 border-transparent whitespace-nowrap transition">
+        部門簡介
+      </button>
+
+      <button type="button" data-tab="teams" onclick="switchTab('teams')"
+              class="nav-tab active px-4 sm:px-6 py-4 text-sm sm:text-base font-bold text-[#004b87] border-b-4 border-[#004b87] whitespace-nowrap transition">
+        組織編制與業務職責
+      </button>
+
+      <a href="https://www.chimei.org.tw/main/cmh_department/54120/guide/32300/index.html" target="_blank" rel="noopener noreferrer"
+         class="px-4 sm:px-6 py-4 text-sm sm:text-base font-semibold text-slate-600 hover:text-[#004b87] border-b-4 border-transparent whitespace-nowrap inline-flex items-center gap-1.5 transition">
+        <span>就醫指南</span>
+        <span class="text-xs bg-amber-100 text-amber-800 px-2 py-0.5 rounded-md font-bold">院區專網 ↗</span>
+      </a>
+
+      <button type="button" data-tab="nhi" onclick="switchTab('nhi')"
+              class="nav-tab px-4 sm:px-6 py-4 text-sm sm:text-base font-semibold text-slate-500 hover:text-[#004b87] border-b-4 border-transparent whitespace-nowrap transition">
+        健保專區
+      </button>
+
+      <button type="button" data-tab="forms" onclick="switchTab('forms')"
+              class="nav-tab px-4 sm:px-6 py-4 text-sm sm:text-base font-semibold text-slate-500 hover:text-[#004b87] border-b-4 border-transparent whitespace-nowrap transition">
+        表單下載中心
+      </button>
+    </div>
+  </div>
+
+  <!-- 4. 主要內容區 -->
+  <main class="flex-grow max-w-6xl w-full mx-auto px-4 sm:px-6 py-8">
+
+    <!-- ==================== 分頁一：部門簡介 ==================== -->
+    <section id="tab-about" class="tab-panel space-y-6">
+      <div class="bg-white rounded-2xl p-6 sm:p-8 shadow-sm border border-slate-200/80">
+        <div class="border-b border-slate-100 pb-4 mb-5">
+          <h2 class="text-xl sm:text-2xl font-bold text-[#004b87]">我們是您就醫旅程的第一站，也是最堅實的後盾</h2>
+          <p class="text-xs sm:text-sm text-slate-400 mt-1">Department Overview &amp; Core Values</p>
+        </div>
+
+        <div class="space-y-4 text-slate-700 text-sm sm:text-base leading-relaxed">
+          <p>
+            奇美醫療財團法人佳里奇美醫院「醫療事務室」下設<strong class="text-slate-900">醫療服務組、住院服務組、申報業務組</strong>三大團隊。我們在醫院中扮演最前線且不可或缺的角色——從民眾踏入醫院掛號諮詢的第一刻，到治療結束辦理批價出院，我們都是與民眾接觸最密切的窗口；同時也是醫院與中央健康保險署對接、守護醫療財務穩健的重要核心。
+          </p>
+          <p>
+            面對不斷演進的醫療服務需求與健保政策，本室全體同仁秉持<strong class="text-[#004b87]">「品質、效率、同理心」</strong>的服務精神，持續優化智慧化櫃台與自助繳費流程，致力維護病人就醫權益並圓滿達成各項臨床行政支援任務，成為社區民眾信賴與院內同仁引以為榮的專業團隊。
+          </p>
+        </div>
+
+        <!-- 三大核心價值卡片 -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-5 mt-7">
+          <div class="bg-blue-50/60 rounded-xl p-5 border-l-4 border-blue-600">
+            <h3 class="text-base sm:text-lg font-bold text-[#004b87] mb-2">💙 第一線溫暖服務</h3>
+            <p class="text-sm text-slate-600 leading-relaxed">
+              提供門診與急診掛號批價、雙向轉診協調及大廳服務台諮詢，用親切態度與高效率縮短您的等候時間。
+            </p>
+          </div>
+
+          <div class="bg-emerald-50/60 rounded-xl p-5 border-l-4 border-emerald-600">
+            <h3 class="text-base sm:text-lg font-bold text-emerald-800 mb-2">🏥 一站式住出院支援</h3>
+            <p class="text-sm text-slate-600 leading-relaxed">
+              整合床位安排、病房帳務管理與各類診斷證明申辦，協助病人與家屬順利完成住院及出院手續。
+            </p>
+          </div>
+
+          <div class="bg-purple-50/60 rounded-xl p-5 border-l-4 border-purple-600">
+            <h3 class="text-base sm:text-lg font-bold text-purple-800 mb-2">📊 精準健保與財務管理</h3>
+            <p class="text-sm text-slate-600 leading-relaxed">
+              嚴謹把關門住院醫療費用申報、事前審查與健保規範遵循，確保醫療資源合理運用與醫院穩健營運。
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- 就醫指南專網引導橫幅 -->
+      <div class="bg-gradient-to-r from-blue-50 to-teal-50 rounded-2xl p-6 border border-blue-200/80 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 shadow-sm">
+        <div>
+          <h3 class="text-base sm:text-lg font-bold text-[#004b87] mb-1">
+            想查詢門診掛號時段、收費方式或診斷書／病歷申請說明嗎？
+          </h3>
+          <p class="text-sm text-slate-600">
+            院方已建置完整的「佳里奇美醫院就醫指南」專網，提供現場與電話掛號時間、收費標準及各類證明申請流程。
+          </p>
+        </div>
+        <a href="https://www.chimei.org.tw/main/cmh_department/54120/guide/32300/index.html" target="_blank" rel="noopener noreferrer"
+           class="shrink-0 inline-flex items-center gap-2 bg-amber-400 hover:bg-amber-300 text-slate-900 font-bold text-sm px-5 py-3 rounded-xl shadow transition">
+          立即開啟就醫指南 ↗
+        </a>
+      </div>
+    </section>
+
+    <!-- ==================== 分頁二：組織編制與業務職責 ==================== -->
+    <section id="tab-teams" class="tab-panel active space-y-6">
+      <div>
+        <h2 class="text-xl sm:text-2xl font-bold text-[#004b87]">組織編制與業務職責</h2>
+        <p class="text-sm text-slate-500 mt-1">完整整合本室三大業務組架構與工作職責介紹，點選任一組別卡片即可檢視該組完整業務明細</p>
+      </div>
+
+      <!-- 頂部組織架構總覽節點 -->
+      <div class="flex flex-col items-center">
+        <div class="bg-gradient-to-r from-rose-50 via-amber-50 to-rose-50 border-2 border-rose-200 text-slate-800 px-8 py-3 rounded-2xl shadow-xs text-center">
+          <div class="text-xs font-semibold text-rose-600 tracking-wider">奇美醫療財團法人佳里奇美醫院</div>
+          <div class="text-lg sm:text-xl font-bold text-slate-900">🏥 醫療事務室</div>
+        </div>
+        <div class="w-0.5 h-4 bg-slate-300"></div>
+        <div class="hidden md:block w-2/3 h-0.5 bg-slate-300"></div>
+      </div>
+
+      <!-- 互動式三組選擇器卡片（整合組織圖子單位與業務總覽） -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+        <!-- 藍色：醫療服務組 -->
+        <button type="button" onclick="selectTeam('service', this)"
+                class="team-card active text-left rounded-2xl p-5 bg-blue-50 border-2 border-blue-500 shadow-md transition-all flex flex-col justify-between">
+          <div>
+            <div class="flex justify-between items-center mb-3">
+              <span class="text-lg font-bold text-blue-800">🔵 醫療服務組</span>
+              <span class="text-xs font-bold bg-blue-600 text-white px-2.5 py-1 rounded-full status-badge">檢視中</span>
+            </div>
+            <!-- 子單位標籤 -->
+            <div class="flex flex-wrap gap-1.5 mb-4">
+              <span class="bg-white text-blue-900 border border-blue-200 text-xs font-bold px-2.5 py-1 rounded-lg">門、急診掛批</span>
+              <span class="bg-white text-blue-900 border border-blue-200 text-xs font-bold px-2.5 py-1 rounded-lg">轉診中心</span>
+              <span class="bg-white text-blue-900 border border-blue-200 text-xs font-bold px-2.5 py-1 rounded-lg">服務台</span>
+            </div>
+            <!-- 組織圖核心項目摘要 -->
+            <ul class="text-xs text-slate-700 space-y-1.5 bg-white/80 rounded-xl p-3.5 border border-blue-100">
+              <li>• 門診、急診掛號批價作業</li>
+              <li>• 非住院組上班時間業務協辦</li>
+              <li>• 門急診颱災就醫服務及職傷電訪</li>
+              <li>• 身心障礙鑑定作業</li>
+              <li>• 轉診個案受理及回覆</li>
+              <li>• 高風險病人召回就醫通知</li>
+              <li>• 法院、勞保、保險調卷</li>
+              <li>• 服務台各項諮詢</li>
+              <li>• 醫師輪值掛號開檔維護</li>
+            </ul>
+          </div>
+        </button>
+
+        <!-- 綠色：住院服務組 -->
+        <button type="button" onclick="selectTeam('inpatient', this)"
+                class="team-card text-left rounded-2xl p-5 bg-emerald-50/75 hover:bg-emerald-50 border-2 border-emerald-200 transition-all flex flex-col justify-between">
+          <div>
+            <div class="flex justify-between items-center mb-3">
+              <span class="text-lg font-bold text-emerald-800">🟢 住院服務組</span>
+              <span class="text-xs font-semibold text-emerald-700 px-2.5 py-1 rounded-full status-badge">點擊切換 ▾</span>
+            </div>
+            <!-- 子單位標籤 -->
+            <div class="flex flex-wrap gap-1.5 mb-4">
+              <span class="bg-white text-emerald-900 border border-emerald-200 text-xs font-bold px-2.5 py-1 rounded-lg">住院批價</span>
+              <span class="bg-white text-emerald-900 border border-emerald-200 text-xs font-bold px-2.5 py-1 rounded-lg">住出院櫃台</span>
+              <span class="bg-white text-emerald-900 border border-emerald-200 text-xs font-bold px-2.5 py-1 rounded-lg">開刀房批價</span>
+            </div>
+            <!-- 組織圖核心項目摘要（已去除重複列） -->
+            <ul class="text-xs text-slate-700 space-y-1.5 bg-white/80 rounded-xl p-3.5 border border-emerald-100">
+              <li>• 病房帳務作業</li>
+              <li>• 協助護理站相關業務管理</li>
+              <li>• 住出院作業與床位管理</li>
+              <li>• 診斷書與相關業務代辦</li>
+              <li>• 開刀房帳務作業</li>
+              <li>• 病床檔維護作業</li>
+            </ul>
+          </div>
+        </button>
+
+        <!-- 紫色：申報業務組 -->
+        <button type="button" onclick="selectTeam('claims', this)"
+                class="team-card text-left rounded-2xl p-5 bg-purple-50/75 hover:bg-purple-50 border-2 border-purple-200 transition-all flex flex-col justify-between">
+          <div>
+            <div class="flex justify-between items-center mb-3">
+              <span class="text-lg font-bold text-purple-800">🟣 申報業務組</span>
+              <span class="text-xs font-semibold text-purple-700 px-2.5 py-1 rounded-full status-badge">點擊切換 ▾</span>
+            </div>
+            <!-- 子單位標籤 -->
+            <div class="flex flex-wrap gap-1.5 mb-4">
+              <span class="bg-white text-purple-900 border border-purple-200 text-xs font-bold px-2.5 py-1 rounded-lg">門診申報</span>
+              <span class="bg-white text-purple-900 border border-purple-200 text-xs font-bold px-2.5 py-1 rounded-lg">住院申報</span>
+            </div>
+            <!-- 組織圖核心項目摘要 -->
+            <ul class="text-xs text-slate-700 space-y-1.5 bg-white/80 rounded-xl p-3.5 border border-purple-100">
+              <li>• 門診申報作業</li>
+              <li>• 住院申報作業</li>
+              <li>• 申覆、爭議作業</li>
+              <li>• 事前審查作業</li>
+              <li>• 試辦計畫專案作業</li>
+              <li>• 計價檔維護作業</li>
+            </ul>
+          </div>
+        </button>
+      </div>
+
+      <!-- ==================== 1. 醫療服務組詳細工作職責 ==================== -->
+      <div id="team-service" class="team-detail bg-white rounded-2xl p-6 sm:p-8 shadow-sm border border-slate-200 border-t-4 border-t-blue-500">
+        <div class="flex flex-wrap items-center justify-between gap-2 pb-4 mb-6 border-b border-slate-100">
+          <div>
+            <h3 class="text-lg sm:text-xl font-bold text-blue-800">醫療服務組｜工作職責介紹</h3>
+            <p class="text-xs sm:text-sm text-slate-500 mt-0.5">涵蓋門急診掛號批價、大廳服務台及轉診中心業務</p>
+          </div>
+          <span class="text-xs bg-blue-100 text-blue-800 font-bold px-3 py-1.5 rounded-full">門、急診掛批 / 轉診中心 / 服務台</span>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          <!-- 左欄：一、門診、急診掛號服務 ＋ 二、批價服務 -->
+          <div class="space-y-5">
+            <div class="bg-slate-50 rounded-xl p-5 border-l-4 border-blue-500">
+              <h4 class="font-bold text-slate-900 text-base mb-2">一、門診、急診掛號服務</h4>
+              <p class="text-sm text-slate-700 pl-2">提供初診病人、複診病人掛號、取消服務（含醫師輪值掛號開檔維護）。</p>
+            </div>
+
+            <div class="bg-slate-50 rounded-xl p-5 border-l-4 border-blue-500 space-y-4">
+              <h4 class="font-bold text-slate-900 text-base">二、批價服務</h4>
+
+              <div class="bg-white rounded-lg p-4 border border-slate-200/80">
+                <h5 class="font-bold text-blue-800 text-sm mb-2">(一) 門診批價服務</h5>
+                <ol class="space-y-1.5 text-sm text-slate-700 list-decimal pl-5">
+                  <li>門診批價收費及補卡、退費作業。</li>
+                  <li>轉檢記帳作業。</li>
+                  <li>補發副本收據及健保費用明細請領。</li>
+                </ol>
+              </div>
+
+              <div class="bg-white rounded-lg p-4 border border-slate-200/80">
+                <h5 class="font-bold text-blue-800 text-sm mb-2">(二) 急診批價服務</h5>
+                <ol class="space-y-1.5 text-sm text-slate-700 list-decimal pl-5">
+                  <li>急診批價收費及補卡、退費作業。</li>
+                  <li>急診住院辦理。</li>
+                  <li>協助辦理自動出院手續。</li>
+                  <li>住院服務組非上班時段之住出院相關業務。</li>
+                  <li>病房借用（歸還）被服押金。</li>
+                  <li>補發副本收據及健保費用明細請領。</li>
+                  <li>診斷書補發申請及用印。</li>
+                </ol>
+              </div>
+            </div>
+          </div>
+
+          <!-- 右欄：三、服務台 ＋ 四、轉診服務 ＋ 其他專案業務 -->
+          <div class="space-y-5">
+            <div class="bg-slate-50 rounded-xl p-5 border-l-4 border-blue-500">
+              <h4 class="font-bold text-slate-900 text-base mb-2.5">三、服務台</h4>
+              <ol class="space-y-1.5 text-sm text-slate-700 list-decimal pl-5">
+                <li>服務台諮詢。</li>
+                <li>查詢醫師看診門診時間。</li>
+                <li>住院病人病房查詢。</li>
+                <li>協助預約掛號。</li>
+                <li>失物招領。</li>
+              </ol>
+            </div>
+
+            <div class="bg-slate-50 rounded-xl p-5 border-l-4 border-blue-500">
+              <h4 class="font-bold text-slate-900 text-base mb-2.5">四、轉診服務</h4>
+              <ol class="space-y-1.5 text-sm text-slate-700 list-decimal pl-5">
+                <li>轉診轉入個案受理、回覆。</li>
+                <li>轉檢、轉代檢業務。</li>
+                <li>法院、勞保、保險文件查詢之案件受理。</li>
+                <li>病房轉診住院（轉院）協助預訂床業務。</li>
+              </ol>
+            </div>
+
+            <div class="bg-blue-50/70 rounded-xl p-5 border border-blue-200">
+              <h4 class="font-bold text-blue-900 text-sm mb-2">📌 本組兼辦專案與行政維護</h4>
+              <ul class="space-y-1 text-sm text-slate-700 list-disc pl-5">
+                <li>門急診颱災就醫服務及職傷電訪關懷。</li>
+                <li>身心障礙鑑定作業與高風險病人召回就醫通知。</li>
+                <li>醫師輪值掛號開檔維護。</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ==================== 2. 住院服務組詳細工作職責 ==================== -->
+      <div id="team-inpatient" class="team-detail hidden bg-white rounded-2xl p-6 sm:p-8 shadow-sm border border-slate-200 border-t-4 border-t-emerald-500">
+        <div class="flex flex-wrap items-center justify-between gap-2 pb-4 mb-6 border-b border-slate-100">
+          <div>
+            <h3 class="text-lg sm:text-xl font-bold text-emerald-800">住院服務組｜工作職責介紹</h3>
+            <p class="text-xs sm:text-sm text-slate-500 mt-0.5">涵蓋住院服務櫃檯、住院批價及開刀房批價等全流程住院行政服務</p>
+          </div>
+          <span class="text-xs bg-emerald-100 text-emerald-800 font-bold px-3 py-1.5 rounded-full">住院批價 / 住出院櫃台 / 開刀房批價</span>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          <!-- 左欄：住院服務櫃檯 (10項) -->
+          <div class="bg-slate-50 rounded-xl p-5 sm:p-6 border-l-4 border-emerald-500">
+            <div class="flex items-center justify-between mb-3">
+              <h4 class="font-bold text-emerald-900 text-base">一、住院服務櫃檯</h4>
+              <span class="text-xs bg-emerald-100 text-emerald-800 font-semibold px-2.5 py-0.5 rounded-md">共 10 項業務</span>
+            </div>
+            <ol class="space-y-2 text-sm text-slate-700 list-decimal pl-5 leading-relaxed">
+              <li>辦理預約住院保留登記及訂床業務。</li>
+              <li>辦理住、出院手續及結帳。</li>
+              <li>住院病人床位及相關資料之查詢。</li>
+              <li>住院高貴藥材、衛材之批價及退藥。</li>
+              <li>各類證明書、收據之補發申請。</li>
+              <li>各項診斷書之加蓋影印。</li>
+              <li>應收帳款之資料整理及費用跟催。</li>
+              <li>承辦死亡證明書申請開立業務。</li>
+              <li>協辦病歷複製申請業務。</li>
+              <li>
+                <strong class="text-slate-900">代辦業務：</strong>重大傷病身分申請、農（勞）保殘廢診斷書、身心障礙鑑定手冊、外籍看護工診斷書、勞工職業傷病住院申請書送件。
+              </li>
+            </ol>
+          </div>
+
+          <!-- 右欄：住院批價（含開刀房批價）(10項) -->
+          <div class="bg-slate-50 rounded-xl p-5 sm:p-6 border-l-4 border-emerald-500">
+            <div class="flex items-center justify-between mb-3">
+              <h4 class="font-bold text-emerald-900 text-base">二、住院批價（含開刀房批價）</h4>
+              <span class="text-xs bg-emerald-100 text-emerald-800 font-semibold px-2.5 py-0.5 rounded-md">共 10 項業務</span>
+            </div>
+            <ol class="space-y-2 text-sm text-slate-700 list-decimal pl-5 leading-relaxed">
+              <li>辦理病人出入院、轉科及轉床手續（含病床檔維護作業）。</li>
+              <li>核對住院病人帳目。</li>
+              <li>衛材計價管理。</li>
+              <li>協助護理站電話接聽及住院滿意度調查作業輸入。</li>
+              <li>其它科室檢查醫令接收錯退作業。</li>
+              <li>門診、急診、住院手術批價作業。</li>
+              <li>工作調配和指導新進書記線上作業。</li>
+              <li>配合申報組工作處理。</li>
+              <li>退藥流程作業。</li>
+              <li>其它臨時交辦業務。</li>
+            </ol>
+          </div>
+        </div>
+      </div>
+
+      <!-- ==================== 3. 申報業務組詳細工作職責 ==================== -->
+      <div id="team-claims" class="team-detail hidden bg-white rounded-2xl p-6 sm:p-8 shadow-sm border border-slate-200 border-t-4 border-t-purple-500">
+        <div class="flex flex-wrap items-center justify-between gap-2 pb-4 mb-6 border-b border-slate-100">
+          <div>
+            <h3 class="text-lg sm:text-xl font-bold text-purple-800">申報業務組｜工作職責介紹</h3>
+            <p class="text-xs sm:text-sm text-slate-500 mt-0.5">負責全院門住診健保費用申報、審查爭議處理及計價檔維護作業</p>
+          </div>
+          <span class="text-xs bg-purple-100 text-purple-800 font-bold px-3 py-1.5 rounded-full">門診申報 / 住院申報</span>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div class="bg-slate-50 rounded-xl p-5 sm:p-6 border-l-4 border-purple-500">
+            <h4 class="font-bold text-purple-900 text-base mb-3">一、醫療費用申報與專案作業</h4>
+            <ol class="space-y-2.5 text-sm text-slate-700 list-decimal pl-5 leading-relaxed">
+              <li>門住診醫療費用申報作業。</li>
+              <li>門住診抽審申報作業。</li>
+              <li>門住診申覆申報作業。</li>
+              <li>門住診爭議申報作業。</li>
+              <li>試辦計劃申報作業。</li>
+            </ol>
+          </div>
+
+          <div class="bg-slate-50 rounded-xl p-5 sm:p-6 border-l-4 border-purple-500">
+            <h4 class="font-bold text-purple-900 text-base mb-3">二、事前審查、補助計畫與計價維護</h4>
+            <ol start="6" class="space-y-2.5 text-sm text-slate-700 list-decimal pl-5 leading-relaxed">
+              <li>事前審查申報作業。</li>
+              <li>醫療院所戒菸服務補助計劃申報作業。</li>
+              <li>勞工保險預防職業病健康檢查申報作業。</li>
+              <li>相關健保業務查詢作業（含全院計價檔維護作業）。</li>
+            </ol>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== 分頁三：健保專區 ==================== -->
+    <section id="tab-nhi" class="tab-panel space-y-6">
+      <div>
+        <h2 class="text-xl sm:text-2xl font-bold text-[#004b87]">健保專區</h2>
+        <p class="text-sm text-slate-500 mt-1">彙整中央健康保險署最新給付規範、支付標準與審查注意事項，供民眾與臨床同仁查閱</p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <button type="button" onclick="showToast('正在開啟「Tw-DRGs 支付制度」專區說明頁...')"
+                class="flex items-center justify-between p-5 bg-white rounded-xl border border-slate-200 hover:border-[#004b87] hover:shadow-md text-left transition group">
+          <div class="flex items-center gap-3">
+            <span class="text-2xl">📑</span>
+            <span class="font-bold text-slate-800 group-hover:text-[#004b87]">Tw-DRGs 支付制度</span>
+          </div>
+          <span class="text-slate-400 group-hover:text-[#004b87] font-bold">→</span>
+        </button>
+
+        <button type="button" onclick="showToast('正在開啟「醫療給付改善方案（試辦計畫）」說明頁...')"
+                class="flex items-center justify-between p-5 bg-white rounded-xl border border-slate-200 hover:border-[#004b87] hover:shadow-md text-left transition group">
+          <div class="flex items-center gap-3">
+            <span class="text-2xl">🩺</span>
+            <span class="font-bold text-slate-800 group-hover:text-[#004b87]">醫療給付改善方案（試辦計畫）</span>
+          </div>
+          <span class="text-slate-400 group-hover:text-[#004b87] font-bold">→</span>
+        </button>
+
+        <button type="button" onclick="showToast('正在開啟「藥品給付規定」查詢頁面...')"
+                class="flex items-center justify-between p-5 bg-white rounded-xl border border-slate-200 hover:border-[#004b87] hover:shadow-md text-left transition group">
+          <div class="flex items-center gap-3">
+            <span class="text-2xl">💊</span>
+            <span class="font-bold text-slate-800 group-hover:text-[#004b87]">藥品給付規定</span>
+          </div>
+          <span class="text-slate-400 group-hover:text-[#004b87] font-bold">→</span>
+        </button>
+
+        <button type="button" onclick="showToast('正在開啟「全民健康保險醫療費用審查注意事項」...')"
+                class="flex items-center justify-between p-5 bg-white rounded-xl border border-slate-200 hover:border-[#004b87] hover:shadow-md text-left transition group">
+          <div class="flex items-center gap-3">
+            <span class="text-2xl">🔍</span>
+            <span class="font-bold text-slate-800 group-hover:text-[#004b87]">全民健康保險醫療費用審查注意事項</span>
+          </div>
+          <span class="text-slate-400 group-hover:text-[#004b87] font-bold">→</span>
+        </button>
+
+        <button type="button" onclick="showToast('正在開啟「行政協助業務相關規定（健保代辦案件）」...')"
+                class="flex items-center justify-between p-5 bg-white rounded-xl border border-slate-200 hover:border-[#004b87] hover:shadow-md text-left transition group">
+          <div class="flex items-center gap-3">
+            <span class="text-2xl">🏛️</span>
+            <span class="font-bold text-slate-800 group-hover:text-[#004b87]">行政協助業務相關規定（健保代辦案件）</span>
+          </div>
+          <span class="text-slate-400 group-hover:text-[#004b87] font-bold">→</span>
+        </button>
+
+        <button type="button" onclick="showToast('正在開啟「重大傷病專區」...')"
+                class="flex items-center justify-between p-5 bg-white rounded-xl border border-slate-200 hover:border-[#004b87] hover:shadow-md text-left transition group">
+          <div class="flex items-center gap-3">
+            <span class="text-2xl">🛡️</span>
+            <span class="font-bold text-slate-800 group-hover:text-[#004b87]">重大傷病專區</span>
+          </div>
+          <span class="text-slate-400 group-hover:text-[#004b87] font-bold">→</span>
+        </button>
+
+        <button type="button" onclick="showToast('正在連結至「中央健康保險署 近期公告」...')"
+                class="flex items-center justify-between p-5 bg-white rounded-xl border border-slate-200 hover:border-[#004b87] hover:shadow-md text-left transition group">
+          <div class="flex items-center gap-3">
+            <span class="text-2xl">📢</span>
+            <span class="font-bold text-slate-800 group-hover:text-[#004b87]">中央健康保險署 近期公告</span>
+          </div>
+          <span class="text-slate-400 group-hover:text-[#004b87] font-bold">→</span>
+        </button>
+
+        <button type="button" onclick="showToast('正在開啟「全民健康保險醫療服務給付項目及支付標準」...')"
+                class="flex items-center justify-between p-5 bg-white rounded-xl border border-slate-200 hover:border-[#004b87] hover:shadow-md text-left transition group">
+          <div class="flex items-center gap-3">
+            <span class="text-2xl">📘</span>
+            <span class="font-bold text-slate-800 group-hover:text-[#004b87]">全民健康保險醫療服務給付項目及支付標準</span>
+          </div>
+          <span class="text-slate-400 group-hover:text-[#004b87] font-bold">→</span>
+        </button>
+      </div>
+    </section>
+
+    <!-- ==================== 分頁四：表單下載中心 ==================== -->
+    <section id="tab-forms" class="tab-panel space-y-6">
+      <div>
+        <h2 class="text-xl sm:text-2xl font-bold text-[#004b87]">表單下載中心</h2>
+        <p class="text-sm text-slate-500 mt-1">已將民眾申請委託書與院內行政／申報表單分流整理，您也可輸入關鍵字快速篩選</p>
+      </div>
+
+      <!-- 篩選與搜尋工具列 -->
+      <div class="bg-white p-4 sm:p-5 rounded-2xl border border-slate-200 shadow-xs flex flex-col md:flex-row justify-between items-stretch md:items-center gap-4">
+        <div class="flex flex-wrap gap-2">
+          <button type="button" onclick="filterForms('all', this)"
+                  class="pill-btn active px-4 py-2 rounded-full text-xs sm:text-sm font-bold bg-[#004b87] text-white transition">
+            全部表單 (14)
+          </button>
+          <button type="button" onclick="filterForms('public', this)"
+                  class="pill-btn px-4 py-2 rounded-full text-xs sm:text-sm font-bold bg-slate-100 text-slate-600 hover:bg-slate-200 transition">
+            👤 民眾申請表單 (4)
+          </button>
+          <button type="button" onclick="filterForms('staff', this)"
+                  class="pill-btn px-4 py-2 rounded-full text-xs sm:text-sm font-bold bg-slate-100 text-slate-600 hover:bg-slate-200 transition">
+            🏥 院內行政／申報表單 (10)
+          </button>
+        </div>
+
+        <div class="relative">
+          <input type="text" id="formSearch" onkeyup="applyFormFilter()"
+                 placeholder="🔍 搜尋表單名稱（如：診斷書、自費）"
+                 class="w-full md:w-72 px-4 py-2 text-sm border border-slate-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#004b87]" />
+        </div>
+      </div>
+
+      <!-- 表單列表 -->
+      <div id="formsList" class="space-y-2.5">
+        <!-- 民眾適用表單 (4) -->
+        <div class="form-item flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-4 bg-white rounded-xl border border-slate-200 hover:border-[#004b87] transition" data-category="public">
+          <div class="flex items-start sm:items-center gap-2.5">
+            <span class="shrink-0 text-xs font-bold bg-emerald-100 text-emerald-800 px-2.5 py-1 rounded-md">民眾適用</span>
+            <span class="font-semibold text-slate-800 text-sm sm:text-base">佳里奇美醫院病歷摘要及病歷影本申請委託書</span>
+          </div>
+          <button type="button" onclick="showToast('已開始下載：佳里奇美醫院病歷摘要及病歷影本申請委託書.pdf')"
+                  class="self-end sm:self-auto shrink-0 px-4 py-2 bg-blue-50 hover:bg-[#004b87] text-[#004b87] hover:text-white text-xs sm:text-sm font-bold rounded-lg transition">
+            ⬇ 下載表單
+          </button>
+        </div>
+
+        <div class="form-item flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-4 bg-white rounded-xl border border-slate-200 hover:border-[#004b87] transition" data-category="public">
+          <div class="flex items-start sm:items-center gap-2.5">
+            <span class="shrink-0 text-xs font-bold bg-emerald-100 text-emerald-800 px-2.5 py-1 rounded-md">民眾適用</span>
+            <span class="font-semibold text-slate-800 text-sm sm:text-base">佳里奇美醫院診斷證明書委託申請／領取委託書</span>
+          </div>
+          <button type="button" onclick="showToast('已開始下載：佳里奇美醫院診斷證明書委託申請／領取委託書.pdf')"
+                  class="self-end sm:self-auto shrink-0 px-4 py-2 bg-blue-50 hover:bg-[#004b87] text-[#004b87] hover:text-white text-xs sm:text-sm font-bold rounded-lg transition">
+            ⬇ 下載表單
+          </button>
+        </div>
+
+        <div class="form-item flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-4 bg-white rounded-xl border border-slate-200 hover:border-[#004b87] transition" data-category="public">
+          <div class="flex items-start sm:items-center gap-2.5">
+            <span class="shrink-0 text-xs font-bold bg-emerald-100 text-emerald-800 px-2.5 py-1 rounded-md">民眾適用</span>
+            <span class="font-semibold text-slate-800 text-sm sm:text-base">病症暨失能診斷證明書（含傳遞單）</span>
+          </div>
+          <button type="button" onclick="showToast('已開始下載：病症暨失能診斷證明書（含傳遞單）.pdf')"
+                  class="self-end sm:self-auto shrink-0 px-4 py-2 bg-blue-50 hover:bg-[#004b87] text-[#004b87] hover:text-white text-xs sm:text-sm font-bold rounded-lg transition">
+            ⬇ 下載表單
+          </button>
+        </div>
+
+        <div class="form-item flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-4 bg-white rounded-xl border border-slate-200 hover:border-[#004b87] transition" data-category="public">
+          <div class="flex items-start sm:items-center gap-2.5">
+            <span class="shrink-0 text-xs font-bold bg-emerald-100 text-emerald-800 px-2.5 py-1 rounded-md">民眾／轉院</span>
+            <span class="font-semibold text-slate-800 text-sm sm:text-base">轉院至跨院區排床候床單</span>
+          </div>
+          <button type="button" onclick="showToast('已開始下載：轉院至跨院區排床候床單.pdf')"
+                  class="self-end sm:self-auto shrink-0 px-4 py-2 bg-blue-50 hover:bg-[#004b87] text-[#004b87] hover:text-white text-xs sm:text-sm font-bold rounded-lg transition">
+            ⬇ 下載表單
+          </button>
+        </div>
+
+        <!-- 院內行政／申報表單 (10) -->
+        <div class="form-item flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-4 bg-white rounded-xl border border-slate-200 hover:border-[#004b87] transition" data-category="staff">
+          <div class="flex items-start sm:items-center gap-2.5">
+            <span class="shrink-0 text-xs font-bold bg-indigo-100 text-indigo-800 px-2.5 py-1 rounded-md">院內作業</span>
+            <span class="font-semibold text-slate-800 text-sm sm:text-base">計價檔申請單</span>
+          </div>
+          <button type="button" onclick="showToast('已開始下載：計價檔申請單.doc')"
+                  class="self-end sm:self-auto shrink-0 px-4 py-2 bg-blue-50 hover:bg-[#004b87] text-[#004b87] hover:text-white text-xs sm:text-sm font-bold rounded-lg transition">
+            ⬇ 下載表單
+          </button>
+        </div>
+
+        <div class="form-item flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-4 bg-white rounded-xl border border-slate-200 hover:border-[#004b87] transition" data-category="staff">
+          <div class="flex items-start sm:items-center gap-2.5">
+            <span class="shrink-0 text-xs font-bold bg-indigo-100 text-indigo-800 px-2.5 py-1 rounded-md">院內作業</span>
+            <span class="font-semibold text-slate-800 text-sm sm:text-base">資源共享申請單</span>
+          </div>
+          <button type="button" onclick="showToast('已開始下載：資源共享申請單.doc')"
+                  class="self-end sm:self-auto shrink-0 px-4 py-2 bg-blue-50 hover:bg-[#004b87] text-[#004b87] hover:text-white text-xs sm:text-sm font-bold rounded-lg transition">
+            ⬇ 下載表單
+          </button>
+        </div>
+
+        <div class="form-item flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-4 bg-white rounded-xl border border-slate-200 hover:border-[#004b87] transition" data-category="staff">
+          <div class="flex items-start sm:items-center gap-2.5">
+            <span class="shrink-0 text-xs font-bold bg-purple-100 text-purple-800 px-2.5 py-1 rounded-md">健保專案</span>
+            <span class="font-semibold text-slate-800 text-sm sm:text-base">B型及C型肝炎試辦計畫申請書（初次治療或初次抗藥株）</span>
+          </div>
+          <button type="button" onclick="showToast('已開始下載：B型及C型肝炎試辦計畫申請書（初次治療）.pdf')"
+                  class="self-end sm:self-auto shrink-0 px-4 py-2 bg-blue-50 hover:bg-[#004b87] text-[#004b87] hover:text-white text-xs sm:text-sm font-bold rounded-lg transition">
+            ⬇ 下載表單
+          </button>
+        </div>
+
+        <div class="form-item flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-4 bg-white rounded-xl border border-slate-200 hover:border-[#004b87] transition" data-category="staff">
+          <div class="flex items-start sm:items-center gap-2.5">
+            <span class="shrink-0 text-xs font-bold bg-purple-100 text-purple-800 px-2.5 py-1 rounded-md">健保專案</span>
+            <span class="font-semibold text-slate-800 text-sm sm:text-base">B型及C型肝炎試辦計畫申請書（復發含抗藥株復發）</span>
+          </div>
+          <button type="button" onclick="showToast('已開始下載：B型及C型肝炎試辦計畫申請書（復發）.pdf')"
+                  class="self-end sm:self-auto shrink-0 px-4 py-2 bg-blue-50 hover:bg-[#004b87] text-[#004b87] hover:text-white text-xs sm:text-sm font-bold rounded-lg transition">
+            ⬇ 下載表單
+          </button>
+        </div>
+
+        <div class="form-item flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-4 bg-white rounded-xl border border-slate-200 hover:border-[#004b87] transition" data-category="staff">
+          <div class="flex items-start sm:items-center gap-2.5">
+            <span class="shrink-0 text-xs font-bold bg-amber-100 text-amber-800 px-2.5 py-1 rounded-md">健保審查</span>
+            <span class="font-semibold text-slate-800 text-sm sm:text-base">PET CT 事前審查申請書</span>
+          </div>
+          <button type="button" onclick="showToast('已開始下載：PET CT 事前審查申請書.doc')"
+                  class="self-end sm:self-auto shrink-0 px-4 py-2 bg-blue-50 hover:bg-[#004b87] text-[#004b87] hover:text-white text-xs sm:text-sm font-bold rounded-lg transition">
+            ⬇ 下載表單
+          </button>
+        </div>
+
+        <div class="form-item flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-4 bg-white rounded-xl border border-slate-200 hover:border-[#004b87] transition" data-category="staff">
+          <div class="flex items-start sm:items-center gap-2.5">
+            <span class="shrink-0 text-xs font-bold bg-amber-100 text-amber-800 px-2.5 py-1 rounded-md">健保審查</span>
+            <span class="font-semibold text-slate-800 text-sm sm:text-base">事前審查申請書空白表</span>
+          </div>
+          <button type="button" onclick="showToast('已開始下載：事前審查申請書空白表.doc')"
+                  class="self-end sm:self-auto shrink-0 px-4 py-2 bg-blue-50 hover:bg-[#004b87] text-[#004b87] hover:text-white text-xs sm:text-sm font-bold rounded-lg transition">
+            ⬇ 下載表單
+          </button>
+        </div>
+
+        <div class="form-item flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-4 bg-white rounded-xl border border-slate-200 hover:border-[#004b87] transition" data-category="staff">
+          <div class="flex items-start sm:items-center gap-2.5">
+            <span class="shrink-0 text-xs font-bold bg-amber-100 text-amber-800 px-2.5 py-1 rounded-md">健保審查</span>
+            <span class="font-semibold text-slate-800 text-sm sm:text-base">醫療費用專審意見溝通單</span>
+          </div>
+          <button type="button" onclick="showToast('已開始下載：醫療費用專審意見溝通單.doc')"
+                  class="self-end sm:self-auto shrink-0 px-4 py-2 bg-blue-50 hover:bg-[#004b87] text-[#004b87] hover:text-white text-xs sm:text-sm font-bold rounded-lg transition">
+            ⬇ 下載表單
+          </button>
+        </div>
+
+        <div class="form-item flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-4 bg-white rounded-xl border border-slate-200 hover:border-[#004b87] transition" data-category="staff">
+          <div class="flex items-start sm:items-center gap-2.5">
+            <span class="shrink-0 text-xs font-bold bg-rose-100 text-rose-800 px-2.5 py-1 rounded-md">自費核定</span>
+            <div>
+              <span class="font-semibold text-slate-800 text-sm sm:text-base block">台南市政府辦理自費收費標準核定審查表</span>
+              <span class="text-xs text-slate-500">含：(1)市場行情比較分析表、(2)成本分析表、(3)本院申請流程表、(4)填寫注意事項</span>
+            </div>
+          </div>
+          <button type="button" onclick="showToast('已開始下載：台南市政府辦理自費收費標準核定審查表（全套4件）.zip')"
+                  class="self-end sm:self-auto shrink-0 px-4 py-2 bg-blue-50 hover:bg-[#004b87] text-[#004b87] hover:text-white text-xs sm:text-sm font-bold rounded-lg transition">
+            ⬇ 下載全套
+          </button>
+        </div>
+
+        <div class="form-item flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-4 bg-white rounded-xl border border-slate-200 hover:border-[#004b87] transition" data-category="staff">
+          <div class="flex items-start sm:items-center gap-2.5">
+            <span class="shrink-0 text-xs font-bold bg-indigo-100 text-indigo-800 px-2.5 py-1 rounded-md">院內作業</span>
+            <span class="font-semibold text-slate-800 text-sm sm:text-base">佳里奇美醫院醫療統計資料申請單</span>
+          </div>
+          <button type="button" onclick="showToast('已開始下載：佳里奇美醫院醫療統計資料申請單.doc')"
+                  class="self-end sm:self-auto shrink-0 px-4 py-2 bg-blue-50 hover:bg-[#004b87] text-[#004b87] hover:text-white text-xs sm:text-sm font-bold rounded-lg transition">
+            ⬇ 下載表單
+          </button>
+        </div>
+
+        <div class="form-item flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-4 bg-white rounded-xl border border-slate-200 hover:border-[#004b87] transition" data-category="staff">
+          <div class="flex items-start sm:items-center gap-2.5">
+            <span class="shrink-0 text-xs font-bold bg-indigo-100 text-indigo-800 px-2.5 py-1 rounded-md">院內作業</span>
+            <span class="font-semibold text-slate-800 text-sm sm:text-base">佳里奇美醫院檢查項目轉奇美體系代檢通知單</span>
+          </div>
+          <button type="button" onclick="showToast('已開始下載：佳里奇美醫院檢查項目轉奇美體系代檢通知單.doc')"
+                  class="self-end sm:self-auto shrink-0 px-4 py-2 bg-blue-50 hover:bg-[#004b87] text-[#004b87] hover:text-white text-xs sm:text-sm font-bold rounded-lg transition">
+            ⬇ 下載表單
+          </button>
+        </div>
+
+        <!-- 無搜尋結果提示 -->
+        <div id="noFormResults" class="hidden text-center py-10 bg-white rounded-xl border border-slate-200 text-slate-500 text-sm">
+          找不到符合關鍵字的表單，請嘗試其他關鍵字或切換篩選分類。
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- 5. 頁尾資訊 -->
+  <footer class="bg-slate-800 text-slate-300 py-8 px-4 sm:px-6 mt-12 text-xs sm:text-sm">
+    <div class="max-w-6xl mx-auto flex flex-col sm:flex-row justify-between gap-6">
+      <div class="space-y-1.5">
+        <p class="text-white font-bold text-base">奇美醫療財團法人佳里奇美醫院｜醫療事務室</p>
+        <p>服務時間：週一至週五 08:00–17:30（急診批價櫃台 24 小時全年無休服務）</p>
+        <p>院區地址：臺南市佳里區興化里佳里興 606 號</p>
+      </div>
+      <div class="sm:text-right space-y-1.5">
+        <p>網頁負責人：謝麗雯｜聯絡分機：<strong class="text-white">32312</strong></p>
+        <p class="text-slate-400">更新日期：2026/11/25｜瀏覽人次：14,060</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- 非阻斷式提示訊息框 (Toast) -->
+  <div id="toast" class="fixed bottom-6 right-6 z-50 hidden items-center gap-3 bg-slate-900 text-white text-sm px-5 py-3.5 rounded-xl shadow-xl border border-slate-700 transition-all">
+    <span class="text-teal-400 font-bold">✓</span>
+    <span id="toast-msg">提示訊息</span>
+  </div>
+
+  <script>
+    // 主導覽分頁切換
+    function switchTab(tabId) {
+      document.querySelectorAll('.nav-tab').forEach(btn => {
+        const isTarget = btn.dataset.tab === tabId;
+        btn.classList.toggle('active', isTarget);
+        if (isTarget) {
+          btn.classList.add('text-[#004b87]', 'border-[#004b87]', 'font-bold');
+          btn.classList.remove('text-slate-500', 'border-transparent', 'font-semibold');
+        } else {
+          btn.classList.remove('text-[#004b87]', 'border-[#004b87]', 'font-bold');
+          btn.classList.add('text-slate-500', 'border-transparent', 'font-semibold');
+        }
+      });
+
+      document.querySelectorAll('.tab-panel').forEach(panel => {
+        panel.classList.remove('active');
+      });
+
+      const targetPanel = document.getElementById('tab-' + tabId);
+      if (targetPanel) {
+        targetPanel.classList.add('active');
+        const navTop = document.getElementById('sticky-nav').offsetTop;
+        if (window.scrollY > navTop) {
+          window.scrollTo({ top: navTop, behavior: 'smooth' });
+        }
+      }
+    }
+
+    // 組織編制三組卡片切換
+    function selectTeam(teamKey, clickedCard) {
+      const styleMap = {
+        service: { activeBorder: 'border-blue-500', activeBg: 'bg-blue-50', badgeBg: 'bg-blue-600' },
+        inpatient: { activeBorder: 'border-emerald-500', activeBg: 'bg-emerald-50', badgeBg: 'bg-emerald-600' },
+        claims: { activeBorder: 'border-purple-500', activeBg: 'bg-purple-50', badgeBg: 'bg-purple-600' }
+      };
+
+      document.querySelectorAll('.team-card').forEach(card => {
+        card.classList.remove('active', 'border-blue-500', 'border-emerald-500', 'border-purple-500', 'shadow-md');
+        card.classList.add('border-slate-200');
+        const badge = card.querySelector('.status-badge');
+        if (badge) {
+          badge.textContent = '點擊切換 ▾';
+          badge.className = 'text-xs font-semibold text-slate-600 px-2.5 py-1 rounded-full status-badge';
+        }
+      });
+
+      const cfg = styleMap[teamKey];
+      clickedCard.classList.remove('border-slate-200');
+      clickedCard.classList.add('active', cfg.activeBorder, cfg.activeBg, 'shadow-md');
+      const activeBadge = clickedCard.querySelector('.status-badge');
+      if (activeBadge) {
+        activeBadge.textContent = '檢視中';
+        activeBadge.className = `text-xs font-bold ${cfg.badgeBg} text-white px-2.5 py-1 rounded-full status-badge`;
+      }
+
+      document.querySelectorAll('.team-detail').forEach(detail => detail.classList.add('hidden'));
+      const targetDetail = document.getElementById('team-' + teamKey);
+      if (targetDetail) {
+        targetDetail.classList.remove('hidden');
+      }
+    }
+
+    // 表單分類與關鍵字篩選
+    let currentCategory = 'all';
+
+    function filterForms(category, btnEl) {
+      currentCategory = category;
+      document.querySelectorAll('.pill-btn').forEach(btn => {
+        btn.classList.remove('bg-[#004b87]', 'text-white');
+        btn.classList.add('bg-slate-100', 'text-slate-600');
+      });
+      btnEl.classList.remove('bg-slate-100', 'text-slate-600');
+      btnEl.classList.add('bg-[#004b87]', 'text-white');
+      applyFormFilter();
+    }
+
+    function applyFormFilter() {
+      const keyword = document.getElementById('formSearch').value.trim().toLowerCase();
+      let visibleCount = 0;
+
+      document.querySelectorAll('.form-item').forEach(item => {
+        const matchCat = currentCategory === 'all' || item.dataset.category === currentCategory;
+        const matchText = item.innerText.toLowerCase().includes(keyword);
+        if (matchCat && matchText) {
+          item.style.display = 'flex';
+          visibleCount++;
+        } else {
+          item.style.display = 'none';
+        }
+      });
+
+      const emptyMsg = document.getElementById('noFormResults');
+      emptyMsg.classList.toggle('hidden', visibleCount > 0);
+    }
+
+    // 非阻斷式 Toast 提示
+    let toastTimer;
+    function showToast(message) {
+      const toast = document.getElementById('toast');
+      const toastMsg = document.getElementById('toast-msg');
+      toastMsg.textContent = message;
+      toast.classList.remove('hidden');
+      toast.classList.add('flex');
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(() => {
+        toast.classList.add('hidden');
+        toast.classList.remove('flex');
+      }, 3200);
+    }
+  </script>
+</body>
+</html>
